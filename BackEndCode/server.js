@@ -87,6 +87,32 @@ server.post("/Users/AddNewUser", async (req, res) => {
     res.send(success);
  });
 
+server.post("/Orders/AddNewOrder", async (req, res) => {
+    let date = new Date(req.body["Date"]);
+    let content = req.body["Content"];
+    let userEmail = req.body["UserEmail"];
+    let boxId = req.body["BoxId"];
 
+    let success;
+    try
+    {
+        let pool = await sql.connect(config);
+        let result2 = await pool.request()
+            .input('date', sql.DateTime, date)
+            .input('content', sql.VarChar, content)
+            .input('userEmail', sql.VarChar(50), userEmail)
+            .input('boxId', sql.VarChar(50), boxId)
+            .output('Success', sql.VarChar(256))
+            .execute('Add_Order_SP')
+        sql.close();
+        success = {"Succes": "True", "Result": result2["output"]["Success"]};
+    }
+    catch(err)
+    {
+        success = {"Succes": "False", "Result":err};
+        console.log(err);
+    }
+    res.send(success);
+});
  
  server.listen(port, ()=> console.log(`Listening on port ${port}`))

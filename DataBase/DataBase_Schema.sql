@@ -26,7 +26,8 @@ CREATE TABLE Orders (
 CREATE TABLE Boxes (
 	Box_Id VARCHAR(50) NOT NULL,
 	Box_Status INT NOT NULL,
-	Box_Description VARCHAR(100) NULL
+	Box_Description VARCHAR(100) NULL,
+	Box_Open BIT NOT NULL
 );
 
 /* Order Status (Catalog)*/
