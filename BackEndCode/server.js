@@ -22,6 +22,7 @@ console.log(plaintext);
 **/
 
 server.post("/Users/AddNewUser", async (req, res) => {
+    console.log(req.body);
     //Data Base config
     let name = req.body["Name"];
     let lastName1 = req.body["LastName1"];
@@ -52,7 +53,6 @@ server.post("/Users/AddNewUser", async (req, res) => {
         console.log(err);
     }
     res.send(success);
-    console.log(req.body)
  });
 
  server.post("/Users/Login", async (req, res) => {
@@ -92,17 +92,16 @@ server.post("/Users/AddNewUser", async (req, res) => {
 
 server.post("/Orders/AddNewOrder", async (req, res) => {
     console.log(req.body);
-    let date2 = new Date();
-    let date = new Date(req.body["Date"]);
-    date.setMinutes( date.getMinutes() - date2.getTimezoneOffset() );
-    console.log(date);
-    let content = req.body["Content"];
-    let userEmail = req.body["UserEmail"];
-    let boxId = req.body["BoxId"];
-
     let success;
     try
     {
+        let date2 = new Date();
+        let date = new Date(req.body["Date"]);
+        date.setMinutes( date.getMinutes() - date2.getTimezoneOffset() );
+        let content = req.body["Content"];
+        content = JSON.stringify(content);
+        let userEmail = req.body["UserEmail"];
+        let boxId = req.body["BoxId"];
         let pool = await sql.connect(config);
         let result2 = await pool.request()
             .input('date', sql.DateTime, date)
@@ -123,7 +122,7 @@ server.post("/Orders/AddNewOrder", async (req, res) => {
     res.send(success);
 });
 
-server.post("/Orders/GetOrders", async (req, res) => {
+server.post("/Orders/GetOrdersbyStatus", async (req, res) => {
     console.log(req.body);
     let success;
     try
@@ -144,13 +143,53 @@ server.post("/Orders/GetOrders", async (req, res) => {
     res.send(success);
 });
 
-server.post("/Orders/UpdateStatus", async (req, res) => {
+server.post("/Orders/GetOrdersbyUser", async (req, res) => {
     console.log(req.body);
-    let orderId = req.body["OrderId"];
-    let statusId = req.body["StatusId"];
+    let success;
+    try
+    {
+        let userId = req.body["UserId"];
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+            .input('userId', sql.VARCHAR(50), userId )
+            .execute('Select_Orders_by_User_SP')
+        sql.close();
+        success = {"Succes": true, "Result": result.recordset};
+    }
+    catch(err)
+    {
+        sql.close();
+        success = {"Succes": false, "Result": err};
+    }
+    res.send(success);
 });
 
-server.get("/Orders/AllStatus", async (req, res) => {
+server.post("/Orders/UpdateStatus", async (req, res) => {
+    console.log(req.body);
+    let success;
+    try
+    {
+        let orderId = req.body["OrderId"];
+        let statusId = req.body["StatusId"];
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+            .input('orderId', sql.Int, orderId )
+            .input('statusId', sql.Int, statusId)
+            .execute('Update_OrderStatus_SP')
+        sql.close();
+        success = {"Succes": true, "Result": result.returnValue};
+    }
+    catch(err)
+    {
+        sql.close();
+        console.log(err);
+        success = {"Succes": true, "Result": err};
+    }    
+    res.send(success);
+});
+
+server.get("/Orders/AllStatus", async (res) => {
+    console.log("Solicitado");
     try
     {
         let pool = await sql.connect(config);
@@ -158,7 +197,6 @@ server.get("/Orders/AllStatus", async (req, res) => {
             .execute('Select_All_Order_Status_SP')
         sql.close();
         success = {"Succes": true, "Result": result.recordset};
-        res.send(success);
     }
     catch(err)
     {
@@ -166,12 +204,35 @@ server.get("/Orders/AllStatus", async (req, res) => {
         console.log(err);
         success = {"Succes": false, "Result": err};
     }
+    res.send(success);
 });
+
+
 
 server.post("/Box/OpenBox", async(req, res) => {
     console.log(req.body);
+});
 
-
+server.post("/Box/IsOpen", async(req, res) => {
+    console.log(req.body);
+    let success;
+    try
+    {
+        let boxId = req.body["BoxId"];
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+            .input('boxId', sql.VARCHAR(50), boxId)
+            .execute('Select_IsOpenBox_by_Id')
+        sql.close();
+        success = {"Success" : true, "Result": result.returnValue};
+    }
+    catch(err)
+    {
+        sql.close();
+        console.log(err);
+        success = {"Success" : false, "Result": "Error"};
+    }
+    res.send(success);
 });
 
 
