@@ -9,14 +9,13 @@ import CartListProducts from './CartListProducts'
 class CartList extends Component {
 
     render() {
-        //console.log(this.props.cartItems.carItems)
         return (
             <View style={styles.container}>
                 {this.props.cartItems.carItems.length > 0 ?
                     <CartListProducts
                         onPress={this.props.removeItem}
                         products={this.props.cartItems.carItems} />
-                    : <Text style={styles.texto}>No has añadido ningun producto</Text>
+                    : <Text style={styles.texto}>No hay ningún producto</Text>
                 }
             </View>
         );

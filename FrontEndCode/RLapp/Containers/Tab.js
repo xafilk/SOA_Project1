@@ -1,16 +1,21 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View,TouchableHighlight } from 'react-native';
-
+import { 
+  StyleSheet, 
+  Text, 
+  View,
+  TouchableHighlight 
+  } from 'react-native';
 import { 
   createAppContainer,
    NavigationActions 
   } from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import MenuScreen from '../Containers/MenuScreen'
 import EstadoSceen from '../Containers/EstadoScreen';
+import OrdenScreen from './OrdenScreen'; 
 
-import { Ionicons } from '@expo/vector-icons'; 
 
 class IconWithBadge extends React.Component {
   render() {
@@ -49,13 +54,20 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
     iconName = `ios-restaurant`;
   } else if (routeName === 'Estado') {
     iconName = `ios-information-circle`;
+  }else if(routeName ==='Orden'){
+    iconName=`ios-cart`
   }
-  return <IconComponent name={iconName} size={25} color={tintColor} />;
+  return <IconComponent 
+          name={iconName}
+          size={25} 
+          color={tintColor}
+          containerStyle={{margin:10}}/>;
 };
 
 const TabNavigator = createBottomTabNavigator({
   Menu: MenuScreen,
   Estado: EstadoSceen,
+  Orden: OrdenScreen
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -66,7 +78,18 @@ const TabNavigator = createBottomTabNavigator({
     activeTintColor: 'rgb(241, 196, 15)',
     inactiveTintColor: 'rgb(243, 156, 18)',
     activeBackgroundColor :'rgb(230, 126, 34)',
-    inactiveBackgroundColor:'rgba(230, 126, 34,0.5)'
+    inactiveBackgroundColor:'rgba(230, 126, 34,0.5)',
+    animationEnabled:true,
+    swipeEnabled :true,
+    labelStyle: {
+      fontSize: 20,
+      },
+    tabStyle:{
+      paddingTop:10
+      },
+
+
+
   },
 });
 export default createAppContainer(TabNavigator);

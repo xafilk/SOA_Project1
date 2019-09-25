@@ -29,7 +29,6 @@ const mapDispatchToProps = (dispatch) => {
         addItemToCart: (product) => dispatch({ type: 'ADD_TO_CART', payload: product })
     }
 }
-
 export default connect(null, mapDispatchToProps)(MenuScreen);
 
 const styles = StyleSheet.create({

@@ -17,9 +17,11 @@ import { connect } from 'react-redux'
     super(props);
     this.state = {
        usuario: '',
-       contraseña:''
+       contraseña:'',
     };
+    global.url='http://192.168.1.115:3000/'
   }
+  
   render() {
     return (
       <ImageBackground source={{uri:'https://images.unsplash.com/photo-1551218372-a8789b81b253?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80'}}
@@ -28,7 +30,7 @@ import { connect } from 'react-redux'
         <View style={styles.cuadro}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Nombre de usuario"
+          placeholder="Correo"
           placeholderTextColor={"rgba(236, 240, 241,0.85)"}
           onChangeText={uruario => this.setState({ usuario:uruario })}
         />
@@ -56,9 +58,31 @@ import { connect } from 'react-redux'
     }
     
   goToMenu = async () => {
-    this.props.addId(this.state.usuario);
-    ToastAndroid.show('Username:'+this.state.usuario, ToastAndroid.SHORT);
-    this.props.navigation.navigate('Tab');
+    fetch(global.url+'Users/Login'
+      ,{
+        method: "POST",
+        body: JSON.stringify({
+          Email: this.state.usuario,
+          Password:this.state.contraseña}),
+        headers:{
+            'Content-Type': 'application/json'
+          }
+        }).then((response) => response.json())
+        .then((responseData) =>
+        {
+          console.log('Respuesta inicio:')
+          console.log(responseData)
+          if(responseData.Succes){
+            this.props.addId(this.state.usuario);
+            this.props.navigation.navigate('Tab');
+          }else{
+            ToastAndroid.show('Contraseña o correo incorrecto, intente de nuevo'
+              ,ToastAndroid.SHORT);
+          }
+        })
+        .catch((error) => {
+        console.error(error);
+        });
   };
   goToRegister = async () => {
     this.props.navigation.navigate('Register');
@@ -81,7 +105,7 @@ const styles = StyleSheet.create({
   },
   boton:{
     borderRadius:8,
-    backgroundColor:'rgba(241, 196, 15,0.8)',
+    backgroundColor:'rgb(241, 196, 15)',
     padding:10,
     margin:5,
     width:'40%',
@@ -93,7 +117,7 @@ const styles = StyleSheet.create({
   },
   TextInput:{
     borderRadius:8,
-    backgroundColor:'rgba(243, 156, 18,0.95)',
+    backgroundColor:'rgb(243, 156, 18)',
     fontSize:20,
     color:'rgb(236, 240, 241)',
     padding:10,

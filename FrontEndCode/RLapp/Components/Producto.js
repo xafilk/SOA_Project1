@@ -12,7 +12,6 @@ class Products extends Component {
         total:0
     }
     renderProducts = (products) => {
-        console.log(products)
         return products.map((item, index) => {
             return (
                 <View key={index} style={styles.container}>
