@@ -43,11 +43,12 @@ server.post("/Users/AddNewUser", async (req, res) => {
             .output('Status', sql.VarChar(50))
             .execute('Add_NewUser_SP')
         sql.close();
-        success = {"Succes": "True", "Result": result2["output"]["Status"]};
+        success = {"Succes": true, "Result": result2["output"]["Status"]};
     }
     catch(err)
     {
-        success = {"Succes": "False", "Result": err};
+        sql.close();
+        success = {"Succes": false, "Result": err};
         console.log(err);
     }
     res.send(success);
@@ -55,6 +56,7 @@ server.post("/Users/AddNewUser", async (req, res) => {
  });
 
  server.post("/Users/Login", async (req, res) => {
+    console.log(req.body);
     let email = req.body["Email"];
     let pass = req.body["Password"]
 
@@ -72,15 +74,16 @@ server.post("/Users/AddNewUser", async (req, res) => {
         var plaintext = bytes.toString(CryptoJS.enc.Utf8);
         if(plaintext === pass)
         {
-            success = {"Succes": "True"};
+            success = {"Succes": true};
         }
         else
         {
-            success = {"Succes": "False"};
+            success = {"Succes": false};
         }     
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False"};
         console.log(err);
     }
@@ -88,7 +91,11 @@ server.post("/Users/AddNewUser", async (req, res) => {
  });
 
 server.post("/Orders/AddNewOrder", async (req, res) => {
+    console.log(req.body);
+    let date2 = new Date();
     let date = new Date(req.body["Date"]);
+    date.setMinutes( date.getMinutes() - date2.getTimezoneOffset() );
+    console.log(date);
     let content = req.body["Content"];
     let userEmail = req.body["UserEmail"];
     let boxId = req.body["BoxId"];
@@ -105,14 +112,68 @@ server.post("/Orders/AddNewOrder", async (req, res) => {
             .output('Success', sql.VarChar(256))
             .execute('Add_Order_SP')
         sql.close();
-        success = {"Succes": "True", "Result": result2["output"]["Success"]};
+        success = {"Succes": true, "Result": result2["output"]["Success"]};
     }
     catch(err)
     {
-        success = {"Succes": "False", "Result":err};
+        sql.close();
+        success = {"Succes": false, "Result":err};
         console.log(err);
     }
     res.send(success);
 });
+
+server.post("/Orders/GetOrders", async (req, res) => {
+    console.log(req.body);
+    let success;
+    try
+    {
+        let status = req.body["StatusId"];
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+            .input('statusId', sql.Int, status)
+            .execute('Select_Orders_by_Status_SP')
+        sql.close();
+        success = {"Succes": true, "Result": result.recordset};
+    }
+    catch(err)
+    {
+        sql.close();
+        success = {"Succes": false, "Result": err};
+    }
+    res.send(success);
+});
+
+server.post("/Orders/UpdateStatus", async (req, res) => {
+    console.log(req.body);
+    let orderId = req.body["OrderId"];
+    let statusId = req.body["StatusId"];
+});
+
+server.get("/Orders/AllStatus", async (req, res) => {
+    try
+    {
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+            .execute('Select_All_Order_Status_SP')
+        sql.close();
+        success = {"Succes": true, "Result": result.recordset};
+        res.send(success);
+    }
+    catch(err)
+    {
+        sql.close();
+        console.log(err);
+        success = {"Succes": false, "Result": err};
+    }
+});
+
+server.post("/Box/OpenBox", async(req, res) => {
+    console.log(req.body);
+
+
+});
+
+
  
  server.listen(port, ()=> console.log(`Listening on port ${port}`))
