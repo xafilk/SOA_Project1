@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor:'rgb(241, 196, 15)',
     padding:10,
     margin:5,
-    width:'40%',
+    width:'90%',
   },
   textoBoton:{
     color:'rgb(230, 126, 34)',
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   TextInput:{
     borderRadius:8,
-    backgroundColor:'rgb(243, 156, 18)',
+    backgroundColor:'rgba(243, 156, 18,0.8)',
     fontSize:20,
     color:'rgb(236, 240, 241)',
     padding:10,
@@ -130,11 +130,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cuadro:{
-    backgroundColor:'rgba(243, 156, 18,0.6)',
+    backgroundColor:'rgba(46,46,46,0.5)',
+    width:'100%',
+    height:'100%',
     margin:'5%',
     paddingTop:'10%',
     paddingBottom:'10%',
-    width:'90%',
     alignItems: 'center',
     justifyContent: 'center',  
 }

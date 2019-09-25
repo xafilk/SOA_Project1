@@ -16,11 +16,12 @@ class OrdenScreen extends Component {
     }
     componentDidMount(){
         this.timer = setInterval(()=> this.obtenerOrdenes(), 3000)
-       }
+    }
     render() {
         return (
             <ImageBackground source={{uri:'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80'}}
             style={styles.container}>
+                <View style={styles.gris}>
                 <ScrollView style={styles.contentContainer}>
                     <View style={styles.OrdenList}>
                         {this.state.orders.length > 0 ?
@@ -31,6 +32,7 @@ class OrdenScreen extends Component {
                         }
                     </View>
                 </ScrollView>
+                </View>
             </ImageBackground>
         )
     }
@@ -86,5 +88,10 @@ const styles = StyleSheet.create({
         width:'100%',
         alignItems: 'center',
         justifyContent: 'center', 
+    },
+    gris:{
+        backgroundColor:'rgba(46,46,46,0.5)',
+        width:'100%',
+        height:'100%',
     }
   });

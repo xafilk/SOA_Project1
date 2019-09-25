@@ -13,12 +13,14 @@ class MenuScreen extends Component {
         return (
             <ImageBackground source={{uri:'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80'}}
             style={styles.container}>
+                <View style={styles.gris}>
                 <ScrollView Style={styles.contentContainer}>
                     <Producto 
                         products={comidas}
                         onPress={this.props.addItemToCart}
                     />
                 </ScrollView>
+                </View>
             </ImageBackground>
         )
     }
@@ -42,5 +44,10 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         marginVertical:20,
         alignItems:"center",
+    },
+    gris:{
+        backgroundColor:'rgba(46,46,46,0.5)',
+        width:'100%',
+        height:'100%',
     }
   });
