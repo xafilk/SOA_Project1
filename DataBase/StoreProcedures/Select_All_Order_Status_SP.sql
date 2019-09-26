@@ -1,7 +1,7 @@
 USE [SOA_Restaurant]
 GO
 
-/****** Object:  StoredProcedure [dbo].[Select_All_Order_Status_SP]    Script Date: 25/9/2019 03:08:07 ******/
+/****** Object:  StoredProcedure [dbo].[Select_All_Order_Status_SP]    Script Date: 26/9/2019 01:28:16 ******/
 SET ANSI_NULLS ON
 GO
 
