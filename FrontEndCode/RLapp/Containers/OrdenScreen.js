@@ -15,7 +15,7 @@ class OrdenScreen extends Component {
         orders:[]
     }
     componentDidMount(){
-        this.timer = setInterval(()=> this.obtenerOrdenes(), 3000)
+        this.timer = setInterval(()=> this.obtenerOrdenes(), 1000)
     }
     render() {
         return (
@@ -26,7 +26,6 @@ class OrdenScreen extends Component {
                     <View style={styles.OrdenList}>
                         {this.state.orders.length > 0 ?
                         <OrdenList
-                            onPress={this.props.removeItem}
                             products={this.state.orders} />
                         : <Text style={styles.texto}>Buscando tus ordenes</Text>
                         }
@@ -50,7 +49,6 @@ class OrdenScreen extends Component {
          .then((response) => response.json())
          .then((responseData) =>
          {
-            console.log(responseData);
             if(responseData.Succes){
                 this.setState({orders:responseData.Result})
             }else{
@@ -63,7 +61,6 @@ class OrdenScreen extends Component {
              console.error(error);
         });
     }
-    
 }
 const mapStateToProps = (state) => {
     return {

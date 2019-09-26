@@ -58,7 +58,8 @@ import { connect } from 'react-redux'
     }
     
   goToMenu = async () => {
-    fetch(global.url+'Users/Login'
+    try {
+      fetch(global.url+'Users/Login'
       ,{
         method: "POST",
         body: JSON.stringify({
@@ -83,6 +84,9 @@ import { connect } from 'react-redux'
         .catch((error) => {
         console.error(error);
         });
+    } catch (error) {
+      ToastAndroid.show('Revisa tu conexión a internet')
+    }
   };
   goToRegister = async () => {
     this.props.navigation.navigate('Register');

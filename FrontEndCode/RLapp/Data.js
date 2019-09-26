@@ -11,7 +11,7 @@ export const comidas = [
     },
     {
         id: 3,
-        name: 'Hamburgues de pollo',
+        name: 'Hamburguesa de pollo',
         price: 500
     },
     {
