@@ -2,9 +2,9 @@
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
  
-const char* ssid = "Loaiza Puerta";
-const char* password = "margarita123";
-String url = "http://192.168.1.115:3000";
+const char* ssid = "EfrenCV";
+const char* password = "carvajal9";
+String url = "http://192.168.43.53:3000";
 char JSONmessageBuffer[300];
 unsigned int Door = 16;
 HTTPClient http;  //Declare an object of class HTTPClient
@@ -96,36 +96,4 @@ void CloseBox()
   {
    int i = 1; 
   }
- 
-  if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
-    HTTPClient http;  //Declare an object of class HTTPClient
-    http.begin("http://192.168.1.115:3000/Box/IsOpen");
-    /*Content Type Header*/
-    http.addHeader("Content-Type", "application/json"); //Specify content-type header 
-    int httpCode = http.POST(JSONmessageBuffer); //Send the request 
-      if (httpCode > 0) { //Check the returning code
-        String payload = http.getString();   //Get the request response payload
-        const int capacity = JSON_OBJECT_SIZE(2);
-        StaticJsonDocument<capacity> doc;
-        DeserializationError err = deserializeJson(doc, payload);
-        bool success = doc["Success"];
-        if(success)
-        {
-          int open = doc["Result"];
-          if(open == 1)
-          {
-            Serial.println("Abierto");
-          } 
-          else
-          {
-            Serial.println("Cerrado");
-          }
-        }
-        Serial.println(payload);                     //Print the response payload
-      }
- 
-      http.end();   //Close connection
- 
-  }
-  delay(5000);    //Send a request every 30 seconds
 }
