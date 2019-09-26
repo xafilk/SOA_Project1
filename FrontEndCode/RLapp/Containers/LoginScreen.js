@@ -19,7 +19,7 @@ import { connect } from 'react-redux'
        usuario: '',
        contraseña:'',
     };
-    global.url='http://192.168.1.115:3000/'
+    global.url='http://192.168.43.53:3000/'
   }
   
   render() {

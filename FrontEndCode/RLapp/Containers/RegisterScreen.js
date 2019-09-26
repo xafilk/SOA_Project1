@@ -9,7 +9,9 @@ import { Text,
   ToastAndroid,
   } from 'react-native'
 
-export default class RegisterScreen extends Component {
+  import { connect } from 'react-redux'
+  
+ class RegisterScreen extends Component {
     state={
         contraseña:'',
         nombre:'',
@@ -89,6 +91,7 @@ export default class RegisterScreen extends Component {
               console.log(responseData);
               if(responseData.Succes){
                 if(responseData.Result==1){
+                  this.props.addId(this.state.correo)
                   this.props.navigation.navigate('Tab');
                 }else{
                   ToastAndroid.show('Correo previamente registrado'
@@ -109,6 +112,13 @@ export default class RegisterScreen extends Component {
       console.log(global.url+'Users/AddNewUser')
     }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+      addId: (userName) => dispatch({ type: 'ADD_ID', payload: userName })
+  }
+}
+
+export default connect(null,mapDispatchToProps)(RegisterScreen);
 
 const styles = StyleSheet.create({
     container: {
