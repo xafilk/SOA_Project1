@@ -11,7 +11,6 @@ HTTPClient http;  //Declare an object of class HTTPClient
 
 void setup () {
   pinMode(Door, OUTPUT);
-  char JSONmessageBuffer[300];
  
   Serial.begin(9600);
   WiFi.begin(ssid, password);
@@ -43,7 +42,8 @@ void ServerRequest()
   try
   {
      http.begin(url + "/Box/IsOpen");
-     http.addHeader("Content-Type", "application/json"); //Specify content-type header 
+     http.addHeader("Content-Type", "application/json"); //Specify content-type header
+     Serial.println(JSONmessageBuffer); 
      int httpCode = http.POST(JSONmessageBuffer); //Send the request 
      if (httpCode > 0) 
      {

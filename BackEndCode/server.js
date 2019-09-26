@@ -253,6 +253,7 @@ server.post("/Box/CloseBox", async(req, res) => {
 });
 
 server.post("/Box/IsOpen", async(req, res) => {
+    console.log("IsOpen");
     console.log(req.body);
     let success;
     try
