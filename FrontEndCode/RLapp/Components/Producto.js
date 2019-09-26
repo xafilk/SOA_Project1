@@ -15,7 +15,7 @@ class Products extends Component {
         return products.map((item, index) => {
             return (
                 <View key={index} style={styles.container}>
-                    <View>
+                    <View style={styles.NombrePrecio}>
                         <Text style={styles.textoNombre}>
                             {item.name}
                         </Text>
@@ -33,7 +33,7 @@ class Products extends Component {
     }
     render() {
         return (
-            <View>
+            <View style={styles.listaProductos}>
                 {this.renderProducts(this.props.products)}
             </View>
         );
@@ -45,26 +45,19 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor:'rgba(243, 156, 18,0.8)',
         margin:20,
-        padding:10,
-        alignItems:"center",
-        justifyContent: 'center',
         width:'90%',
         flexDirection: 'row',
+        borderRadius:8,
         flex: 1
     },
     boton:{
-        borderRadius:8,
         backgroundColor:'rgba(241, 196, 15,0.8)',
         padding:10,
-        margin:5,
-        width:'15%',
-        alignItems:"center",
-        justifyContent: 'center',
-        marginLeft:'5%'
+        margin:'5%',
       },
     textoNombre:{
         color:'rgb(236, 240, 241)',
-        fontSize:30,
+        fontSize:25,
         textAlign:"center",
     },
     textoPrecio:{
@@ -74,5 +67,14 @@ const styles = StyleSheet.create({
     },
     icon:{
         color:'rgb(230, 126, 34)'
+    },
+    listaProductos:{
+        marginTop:'5%'
+    },
+    NombrePrecio:{
+        alignItems:"center",
+        justifyContent: 'center', 
+        width:'80%',
+        padding:'2%'
     }
 });
