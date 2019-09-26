@@ -7,10 +7,9 @@ import {
     ScrollView,
     ToastAndroid
     } from 'react-native'
-import { connect } from 'react-redux'
 import OrdenList from '../Components/OrdenList'
 
-class OrdenScreen extends Component {
+export default class OrdenScreen extends Component {
     state={
         orders:[]
     }
@@ -27,7 +26,7 @@ class OrdenScreen extends Component {
                         {this.state.orders.length > 0 ?
                         <OrdenList
                             products={this.state.orders} />
-                        : <Text style={styles.texto}>Buscando tus ordenes</Text>
+                        : <Text style={styles.texto}>Buscando ordenes</Text>
                         }
                     </View>
                 </ScrollView>
@@ -36,13 +35,9 @@ class OrdenScreen extends Component {
         )
     }
     obtenerOrdenes = () => {
-        console.log('consultado ordenes')
-        fetch(global.url+'Orders/GetOrdersbyUser'
+        fetch(global.url+'Orders/GetAllOrders'
         , {
-            method: "POST",
-            body: JSON.stringify({
-            UserId:this.props.datosRedux.userInfo,
-            }),
+            method: "GET",
             headers:{
                 'Content-Type': 'application/json'
             }   
@@ -63,12 +58,6 @@ class OrdenScreen extends Component {
         });
     }
 }
-const mapStateToProps = (state) => {
-    return {
-        datosRedux: state
-    }
-}
-export default connect(mapStateToProps)(OrdenScreen);
 
 
 const styles = StyleSheet.create({

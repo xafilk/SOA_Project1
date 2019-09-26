@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, } from 'react-native';
-import RCapp from './RCapp'
 import { Provider } from 'react-redux'
 import store from './Redux/Store'
+
+import Grid from './Containers/Grid';
+import RCapp from './RCapp';
 
 export default function App() {
   return (
