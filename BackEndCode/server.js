@@ -157,6 +157,23 @@ server.post("/Orders/GetOrdersbyUser", async (req, res) => {
     res.send(success);
 });
 
+server.get("/Orders/GetAllOrders", async (req, res) => {
+    //console.log(req.body);
+    let success;
+    try
+    {
+        let result = await pool1.request()
+            .execute('Select_Orders_All_SP');
+        success = {"Succes": true, "Result": result.recordset};
+    }
+    catch(err)
+    {
+        success = {"Succes": false, "Result": err};
+        console.log(err);
+    }
+    res.send(success);
+});
+
 server.post("/Orders/UpdateStatus", async (req, res) => {
     console.log(req.body);
     let success;
