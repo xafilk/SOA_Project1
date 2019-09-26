@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const server = express();
 const port = 3000;
 const sql = require('mssql');
-
 var CryptoJS = require("crypto-js");
 
 server.use(bodyParser.json());

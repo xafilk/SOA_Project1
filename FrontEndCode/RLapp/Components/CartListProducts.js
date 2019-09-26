@@ -22,7 +22,7 @@ class CartListProducts extends Component {
                     </View>
                     <TouchableHighlight style={styles.delect}
                     onPress={() => this.props.onPress(item)}>
-                        <Icon style={styles.icon} name="ios-close" size={40} />
+                        <Icon style={styles.icon} name="ios-close" size={50} />
                     </TouchableHighlight>
                 </View>
             )
@@ -41,9 +41,11 @@ export default CartListProducts;
 const styles = StyleSheet.create({
     container:{
         margin:20,
-        padding:10,
+        padding:20,
         alignItems:"center",
         justifyContent: 'center',
+        width:'85%',
+        height:'100%',
     },
     boton:{
         borderRadius:8,
@@ -65,7 +67,6 @@ const styles = StyleSheet.create({
         width:'15%',
         alignItems:"center",
         justifyContent: 'center',
-        marginLeft:'5%',
         
     },
     icon:{
