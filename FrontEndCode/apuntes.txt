@@ -1,0 +1,8 @@
+npm install redux
+npm install react-redux@5.1.1 
+npm install react-navigation
+npm install react-native-simple-time-picker
+npm install react-navigation-stack
+npm install react-navigation-tabs
+npm install react-native-gesture-handler
+npm install react-native-reanimated
