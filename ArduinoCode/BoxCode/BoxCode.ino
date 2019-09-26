@@ -4,9 +4,14 @@
  
 const char* ssid = "Loaiza Puerta";
 const char* password = "margarita123";
+String url = "http://192.168.1.115:3000";
 char JSONmessageBuffer[300];
- 
+unsigned int Door = 16;
+HTTPClient http;  //Declare an object of class HTTPClient
+
 void setup () {
+  pinMode(Door, OUTPUT);
+  char JSONmessageBuffer[300];
  
   Serial.begin(9600);
   WiFi.begin(ssid, password);
@@ -25,6 +30,72 @@ void setup () {
 }
  
 void loop() {
+  //Check WiFi connection status
+  if (WiFi.status() == WL_CONNECTED) 
+  {     
+    ServerRequest(); 
+  }
+  delay(5000);    //Send a request every 30 seconds
+}
+
+void ServerRequest()
+{
+  try
+  {
+     http.begin(url + "/Box/IsOpen");
+     http.addHeader("Content-Type", "application/json"); //Specify content-type header 
+     int httpCode = http.POST(JSONmessageBuffer); //Send the request 
+     if (httpCode > 0) 
+     {
+        String response = http.getString();   //Get the request response payload
+        const int capacity = JSON_OBJECT_SIZE(4);
+        StaticJsonDocument<capacity> doc;
+        DeserializationError err = deserializeJson(doc, response);
+        bool success = doc["Success"];
+        if(success)
+        {
+          int toOpen = doc["Result"];
+          MakeAcction(toOpen);
+        }
+        Serial.println(response);  
+     }
+     http.end();   //Close connection
+  }
+  catch(...)
+  {
+    int a = 1;
+  }
+}
+
+void MakeAcction(int toOpen)
+{
+  if(toOpen == 1)
+  {
+    Serial.println("Abierto");
+    digitalWrite(Door, HIGH);
+    delay(10000);
+    CloseBox();
+    digitalWrite(Door, LOW); 
+  } 
+  else
+  {
+    Serial.println("Cerrado");  
+  }
+}
+
+void CloseBox()
+{
+  try
+  {
+    http.begin(url + "/Box/CloseBox");
+    http.addHeader("Content-Type", "application/json"); //Specify content-type header 
+    int httpCode = http.POST(JSONmessageBuffer); //Send the request 
+    http.end();
+  }
+  catch(...)
+  {
+   int i = 1; 
+  }
  
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
     HTTPClient http;  //Declare an object of class HTTPClient
