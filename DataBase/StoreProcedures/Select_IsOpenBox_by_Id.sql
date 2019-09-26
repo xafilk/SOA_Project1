@@ -1,7 +1,7 @@
 USE [SOA_Restaurant]
 GO
 
-/****** Object:  StoredProcedure [dbo].[Select_IsOpenBox_by_Id]    Script Date: 25/9/2019 03:08:18 ******/
+/****** Object:  StoredProcedure [dbo].[Select_IsOpenBox_by_Id]    Script Date: 26/9/2019 01:28:25 ******/
 SET ANSI_NULLS ON
 GO
 
