@@ -97,9 +97,12 @@ export default class OrdenItem extends Component {
       cambiarEstado = () => {
         try {
             
-          fetch(global.url+'Orders/GetAllOrders'
+          fetch(global.url+'Orders/UpdateStatus'
           ,{
-            method: "GET",
+            method: "POST",
+            body: JSON.stringify({
+                OrderId:this.props.orderId,
+                StatusId:this.props.statusId+1}),
             headers:{
                 'Content-Type': 'application/json'
               }

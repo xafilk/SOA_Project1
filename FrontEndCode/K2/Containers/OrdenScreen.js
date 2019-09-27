@@ -65,11 +65,10 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center', 
+      width:'100%'
     },
     contentContainer:{
         width:'100%',
-        paddingVertical: 20,
-        marginVertical:20,
     },
     OrdenList:{
         width:'100%',
