@@ -34,18 +34,18 @@ export default class OrdenList extends Component {
 
 const styles = StyleSheet.create({
     orderList:{
+        flex:1,
         width:'100%',
         height:'100%',
-        alignItems:"center",
-        justifyContent: 'center',
-
+        paddingTop:'5%',
         borderRadius:8,
     },
     texto:{
-        color:'white',
+        color:'black',
         textAlign:'center',
         justifyContent: 'center',
         fontSize:20,
+        paddingTop:'10%'
     },
     container:{
         paddingTop:'5%',
